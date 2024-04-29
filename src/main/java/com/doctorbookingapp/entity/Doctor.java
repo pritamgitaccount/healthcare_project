@@ -1,0 +1,44 @@
+package com.doctorbookingapp.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "doctors")
+@JsonIgnoreProperties("reviews")
+public class Doctor {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "DOCTOR_NAME", nullable = false)
+    private String doctorName;
+
+    @Column(name = "QUALIFICATION", nullable = false)
+    private String qualification;
+
+    @Column(name = "SPECIALIZATION", nullable = false)
+    private String specialization;
+
+    @Column(name = "EXPERIENCE", nullable = false)
+    private int experience;
+
+    @Column(name = "DESCRIPTION")
+    private String descriptions;
+
+    @Column(name = "HOSPITAL")
+    private String hospital;
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
+}
