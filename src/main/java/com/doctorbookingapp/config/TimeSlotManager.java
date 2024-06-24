@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-// Using Lombok annotation @RequiredArgsConstructor to automatically generate a constructor that initializes final fields.
 public class TimeSlotManager {
 
     // Declaring a final field to hold the list of available time slots.

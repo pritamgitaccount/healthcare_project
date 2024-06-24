@@ -4,22 +4,29 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 
 
-
 @Getter
 @Setter
 public class SignUpDto {
 
-//    @NotBlank(message = "Name cannot be blank")
-    private String name;
+    private Long id;
 
-   // @NotBlank(message = "Username cannot be blank")
+    @NotEmpty(message = "Name cannot be blank")
+    private String firstName;
+
+
+    private String lastName;
+
+    @NotEmpty(message = "Username cannot be blank")
     private String username;
 
-//    @NotBlank(message = "Email cannot be blank")
-//    @Email(message = "Invalid email format")
+    @NotEmpty(message = "Email cannot be blank")
+    @Email(message = "Invalid email format")
     private String email;
 
-//    @NotBlank(message = "Password cannot be blank")
-//    @Size(min = 6, message = "Password must be at least 6 characters")
+    @NotEmpty(message = "Password cannot be blank")
+    @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
+
+    @NotEmpty(message = "User role cannot be blank")
+    private String userRole;
 }

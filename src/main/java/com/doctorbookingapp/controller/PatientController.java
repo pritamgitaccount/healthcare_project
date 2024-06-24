@@ -2,10 +2,7 @@ package com.doctorbookingapp.controller;
 
 import com.doctorbookingapp.entity.Patient;
 import com.doctorbookingapp.payload.PatientDto;
-import com.doctorbookingapp.repository.PatientRepository;
 import com.doctorbookingapp.service.PatientService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/patients")
 public class PatientController {
-    @Autowired
-    private PatientService patientService;
+
+    private final PatientService patientService;
+
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
+    }
 
 
     //http://localhost:8080/api/patients
@@ -45,7 +46,8 @@ public class PatientController {
 
 
     @PutMapping("/{patientId}")
-    public ResponseEntity<Patient> updatePatient(@PathVariable Long patientId, @RequestBody Patient updatedPatient) {
+    public ResponseEntity<Patient> updatePatient(@PathVariable Long patientId,
+                                                              @RequestBody Patient updatedPatient) {
         Patient patient = patientService.updatePatient(patientId, updatedPatient);
         return new ResponseEntity<>(patient, HttpStatus.OK);
     }

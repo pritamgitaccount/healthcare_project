@@ -1,6 +1,7 @@
 package com.doctorbookingapp.service.impl;
 
 import com.doctorbookingapp.entity.User;
+import com.doctorbookingapp.exception.ResourceNotFoundException;
 import com.doctorbookingapp.payload.SignInDto;
 import com.doctorbookingapp.payload.SignUpDto;
 import com.doctorbookingapp.repository.UserRepository;
@@ -27,10 +28,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public SignUpDto addUser(SignUpDto signUpDto) {
         // Check if user with the same username already exists
-        if (userRepository.findByUsername(signUpDto.getUsername()).isPresent()) {
-            return null; // User already exists
-        }
+        userRepository.findByUsername(signUpDto.getUsername()).orElseThrow(
 
+                () -> new ResourceNotFoundException("User with username " + signUpDto.getUsername() + " already exists")
+        );
         // Create new user entity
         User userSignUp = new User();
         userSignUp.setFirstName(signUpDto.getFirstName());

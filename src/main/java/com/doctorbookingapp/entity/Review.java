@@ -3,7 +3,8 @@ package com.doctorbookingapp.entity;
 import lombok.*;
 import jakarta.persistence.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

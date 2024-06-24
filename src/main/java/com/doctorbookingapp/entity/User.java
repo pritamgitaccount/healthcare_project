@@ -1,8 +1,8 @@
 package com.doctorbookingapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.*;
 
 
 @Getter
@@ -11,25 +11,27 @@ import java.util.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User { //this is the parent table
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    @Column(name = "first_name", nullable = false, length = 150)
+    private String firstName;
 
-    @Column(unique = true)
-    private String email;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
-    @Column(unique = true)
+    @Column(name = "username", unique = true, length = 150)
     private String username;
 
+    @Column(name = "email", unique = true, length = 250)
+    private String email;
+
+    @JsonIgnore
+    @Column(name = "user_role", nullable = false, length = 40)
+    private String userRole;
+    @JsonIgnore
+    @Column(name = "password", nullable = false)
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name="user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name="role_id")
-    )
-    private Set<Role> roles=new HashSet<>();
 }

@@ -62,14 +62,9 @@ public class ReviewController {
 
     private double calculateOverallRatingPercentage(List<Review> reviews) {
         // Step 1: Create a stream of Review objects from the provided list
-        OptionalDouble averageRating = reviews.stream()
-
-                // Step 2: Map each Review to its rating (extracting the rating)
-                .mapToDouble(Review::getRating)
-
-                // Step 3: Calculate the average rating using the DoubleStream.average() method
-                .average();
-
+        // Step 2: Map each Review to its rating (extracting the rating)
+        // Step 3: Calculate the average rating using the DoubleStream.average() method
+        OptionalDouble averageRating = reviews.stream().mapToDouble(Review::getRating).average();
         // Step 4: Retrieve the average rating if present, otherwise use a default value of 0.0
         // Step 5: Convert the average rating to a percentage (assuming ratings are on a scale of 0 to 5)
         return averageRating.orElse(0.0) / 5.0 * 100.0;
