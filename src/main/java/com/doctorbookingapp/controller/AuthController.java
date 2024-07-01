@@ -6,7 +6,6 @@ import com.doctorbookingapp.payload.SignInDto;
 import com.doctorbookingapp.payload.SignUpDto;
 import com.doctorbookingapp.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +23,7 @@ public class AuthController {
     public AuthController(UserService userService) {
         this.userService = userService;
     }
+
     // Endpoint: http://localhost:8080/api/users/signup
     @PostMapping("/signup")
     public ResponseEntity<String> addUser(@Valid @RequestBody SignUpDto signUpDto, BindingResult result) {
@@ -33,19 +33,14 @@ public class AuthController {
                     .getDefaultMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        try {
-            // Attempt to add user
-            SignUpDto dto = userService.addUser(signUpDto);
+        // Attempt to add user
+        SignUpDto dto = userService.addUser(signUpDto);
 
-            // Handle the response based on the result from UserService
-            if (dto != null) {
-                return new ResponseEntity<>("SignUp successfully", HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>("User with the same username already exists", HttpStatus.CONFLICT);
-            }
-        } catch (DataIntegrityViolationException e) {
-            // Exception occurred due to duplicate entry (e.g., email already exists)
-            return new ResponseEntity<>("Email address is already registered", HttpStatus.CONFLICT);
+        // Handle the response based on the result from UserService
+        if (dto != null) {
+            return new ResponseEntity<>("SignUp successfully", HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("User with the same username already exists", HttpStatus.CONFLICT);
         }
     }
 
