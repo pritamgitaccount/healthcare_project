@@ -1,13 +1,17 @@
 package com.doctorbookingapp.payload;
 
+import lombok.Data;
 
-
+@Data
 public class PatientDto {
     private Long patientId;
     private String name;
     private String disease;
     private int age;
+    private String mobile;
+    private String email;
 
+    /*
     public Long getPatientId() {
         return patientId;
     }
@@ -56,7 +60,5 @@ public class PatientDto {
         this.email = email;
     }
 
-    private String mobile;
-    private String email;
-
+*/
 }

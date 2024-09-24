@@ -1,6 +1,7 @@
 package com.doctorbookingapp.payload;
 
 // Assuming Java 16 or later
+import javax.swing.*;
 import java.util.Date;
 
 public record ErrorDetails(Date timestamp, String message, String details) {

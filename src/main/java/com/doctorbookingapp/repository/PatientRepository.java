@@ -13,11 +13,9 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 //
 //    //Whenever we call this incomplete method like this , Spring Boot internally generates HQL query
 //    // (Hibernate query language) for this, and it will start searching for the database
-   Optional<Patient> findByEmail(String email);
-//
-//    Optional<Patient> findByUsernameOrEmail(String userName, String email);
-//
-//    Boolean existsByUsername(String username);
-//
-//    Boolean existsByEmail(String email);
+//   Optional<Patient> findByEmail(String email);
+
+    boolean existsByMobile(String mobile);
+
+    boolean existsByEmail(String email);
 }

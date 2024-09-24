@@ -1,17 +1,20 @@
 package com.doctorbookingapp.payload;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.*;
 
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SignInDto {
 
     @NotBlank(message = "Username or Email cannot be blank")
-    private String username;
+    String username;
 
     @NotBlank(message = "Password cannot be blank")
-    private String password;
+    String password;
 }
 
 

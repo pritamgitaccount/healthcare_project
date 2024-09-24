@@ -12,7 +12,7 @@ import java.util.Date;
 
 
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler1 extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorDetails> handleBlogAPIException(ResourceNotFoundException e, WebRequest webRequest) {

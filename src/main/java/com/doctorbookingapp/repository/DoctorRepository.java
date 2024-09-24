@@ -7,13 +7,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-    public interface DoctorRepository extends JpaRepository<Doctor, Long> {
-        @Query("SELECT d FROM Doctor d " +
-                "WHERE lower(d.doctorName) LIKE lower(concat('%', :search, '%')) " +
-                "OR lower(d.specialization) LIKE lower(concat('%', :search, '%')) " +
-                "OR lower(d.hospital) LIKE lower(concat('%', :search, '%'))")
-        List<Doctor> searchByNameOrSpecializationOrHospital(@Param("search") String search);
-    }
-
-
-
+public interface DoctorRepository extends JpaRepository<Doctor, Long> {
+    @Query("SELECT d FROM Doctor d " +
+            "WHERE lower(d.doctorName) LIKE lower(concat('%', :search, '%')) " +
+            "OR lower(d.specialization) LIKE lower(concat('%', :search, '%')) " +
+            "OR lower(d.hospital) LIKE lower(concat('%', :search, '%'))")
+    List<Doctor> searchByNameOrSpecializationOrHospital(@Param("search") String search);
+}

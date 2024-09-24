@@ -1,9 +1,9 @@
 package com.doctorbookingapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "patients")
-@JsonIgnoreProperties("reviews")
 public class Patient {
 
     @Id
@@ -33,6 +32,7 @@ public class Patient {
     @Column(name = "email")
     private String email;
 
+    @JsonIgnore
     // Add the OneToMany relationship with Review
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();

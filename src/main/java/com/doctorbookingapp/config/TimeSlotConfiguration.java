@@ -19,4 +19,3 @@ public class TimeSlotConfiguration {
         return new TimeSlotManager(availableTimeSlots);
     }
 }
-

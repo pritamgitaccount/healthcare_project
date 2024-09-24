@@ -3,30 +3,32 @@ package com.doctorbookingapp.payload;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.util.Set;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SignUpDto {
 
-    private Long id;
+    private Long id; // May not be needed for signup, unless you plan to handle updates
 
-    @NotEmpty(message = "Name cannot be blank")
+    @NotBlank(message = "First name cannot be blank")
     private String firstName;
 
+    private String lastName; // Optional field
 
-    private String lastName;
-
-    @NotEmpty(message = "Username cannot be blank")
+    @NotBlank(message = "Username cannot be blank")
     private String username;
 
-    @NotEmpty(message = "Email cannot be blank")
+    @NotBlank(message = "Email cannot be blank")
     @Email(message = "Invalid email format")
     private String email;
 
-    @NotEmpty(message = "Password cannot be blank")
+    @NotBlank(message = "Password cannot be blank")
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
-    @NotEmpty(message = "User role cannot be blank")
-    private String userRole;
+    // Allow roles to be provided dynamically
+    private Set<String> roles;
 }
