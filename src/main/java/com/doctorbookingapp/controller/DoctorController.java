@@ -28,6 +28,15 @@ public class DoctorController {
     //http://localhost:8080/api/doctors/search?search=yourSearchTerm
     @GetMapping("/search")
     public ResponseEntity<List<Doctor>> searchDoctors(@RequestParam String search) {
-        return new ResponseEntity<>(doctorService.searchByNameOrSpecializationOrHospital(search), HttpStatus.OK);
+        List<Doctor> doctors = doctorService.searchByNameOrSpecializationOrHospital(search);
+        return new ResponseEntity<>(doctors, HttpStatus.OK);
     }
+
+    //http://localhost:8080/api/doctors/update/{id}
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Doctor> updateDoctorById(@PathVariable Long id, @RequestBody Doctor doctorDetails) {
+        Doctor updatedDoctorDetails = doctorService.updateDoctorById(id, doctorDetails);
+        return new ResponseEntity<>(updatedDoctorDetails, HttpStatus.OK);
+    }
+
 }
