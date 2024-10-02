@@ -42,6 +42,7 @@ public class ReviewController {
 
     @GetMapping("/{doctorId}")
     public ResponseEntity<DoctorDto> getReviewsByDoctorId(@PathVariable long doctorId) {
+
         // Step 1: Retrieve the Doctor by ID from the repository
         Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(
                 () -> new ResourceNotFoundException("Doctor not found with ID: " + doctorId)

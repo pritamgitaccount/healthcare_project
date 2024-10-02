@@ -15,9 +15,14 @@ import java.util.Date;
 public class GlobalExceptionHandler1 extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorDetails> handleBlogAPIException(ResourceNotFoundException e, WebRequest webRequest) {
+    public ResponseEntity<ErrorDetails> handleAPIExceptions(ResourceNotFoundException e, WebRequest webRequest) {
 
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), e.getMessage(), webRequest.getDescription(false));
+        // Create a custom error response with timestamp, error message, and request details.
+        ErrorDetails errorDetails = new ErrorDetails(
+                new Date(), // The timestamp when the error occurred.
+                e.getMessage(), // The message from the thrown ResourceNotFoundException.
+                webRequest.getDescription(false) // The request description, excluding the query string (false).
+        );
 
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
