@@ -7,7 +7,7 @@ public class PatientDto {
     private Long patientId;
     private String name;
     private String disease;
-    private int age;
+    private Integer age;
     private String mobile;
     private String email;
 

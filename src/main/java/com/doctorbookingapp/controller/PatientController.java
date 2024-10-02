@@ -62,14 +62,14 @@ public class PatientController {
         return new ResponseEntity<>("Patient has deleted with Id : " + patientId, HttpStatus.OK);
     }
 
-    //Method: UpdatePatient
-    // http://localhost:8080/api/patients?patientId=123
-    @PutMapping
-    public ResponseEntity<UpdateResponse> updatePatient(@RequestParam Long patientId, @RequestBody PatientDto updatedPatient) {
+    // Controller: Handle PATCH request
+    //http://localhost:8080/api/patients?patientId=123
+    @PatchMapping
+    public ResponseEntity<UpdateResponse> updatePatient(@RequestParam Long patientId,
+                                                                                                           @RequestBody PatientDto updatedPatient) {
         // Call the service method which returns an UpdateResponse
         UpdateResponse updateResponse = patientService.updatePatient(patientId, updatedPatient);
         // Return the response with a success message
         return new ResponseEntity<>(updateResponse, HttpStatus.OK);
     }
-
 }

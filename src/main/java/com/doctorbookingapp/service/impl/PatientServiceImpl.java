@@ -41,26 +41,34 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.deleteById(id);
     }
 
+    // Service: Updated logic for PATCH
     @Override
     public UpdateResponse updatePatient(Long patientId, PatientDto patientDto) {
         // Fetch the existing patient by ID
         Patient existingPatient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with Id: " + patientId));
 
-        // Map the DTO to a temporary patient object
-        Patient tempPatient = mapToPatient(patientDto);
-
-        // Update the existing patient's fields
-        existingPatient.setName(tempPatient.getName());
-        existingPatient.setEmail(tempPatient.getEmail());
-        existingPatient.setMobile(tempPatient.getMobile());
-        existingPatient.setAge(tempPatient.getAge());
-        existingPatient.setDisease(tempPatient.getDisease());
+        // Update only the fields that are provided (not null) in the patientDto
+        if (patientDto.getName() != null) {
+            existingPatient.setName(patientDto.getName());
+        }
+        if (patientDto.getEmail() != null) {
+            existingPatient.setEmail(patientDto.getEmail());
+        }
+        if (patientDto.getMobile() != null) {
+            existingPatient.setMobile(patientDto.getMobile());
+        }
+        if (patientDto.getAge() != null) {
+            existingPatient.setAge(patientDto.getAge());
+        }
+        if (patientDto.getDisease() != null) {
+            existingPatient.setDisease(patientDto.getDisease());
+        }
 
         // Save the updated patient back to the repository
         patientRepository.save(existingPatient);
 
-        // Prepare the response with a success message and existingPatient converted to PatientDto
+        // Prepare the response with a success message and the updated patientDto
         PatientDto updatedPatientDto = mapToDto(existingPatient);
         String message = "Patient with Id " + patientId + " updated successfully.";
         return new UpdateResponse(updatedPatientDto, message);

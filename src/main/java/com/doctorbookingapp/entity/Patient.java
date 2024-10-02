@@ -24,7 +24,7 @@ public class Patient {
     @Column(name = "disease", nullable = false)
     private String disease;
     @Column(name = "age", nullable = false)
-    private int age;
+    private Integer age;
 
     @Column(name = "mobile", nullable = false, unique = true)
     private String mobile;
