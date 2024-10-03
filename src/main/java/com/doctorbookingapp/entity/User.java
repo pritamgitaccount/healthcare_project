@@ -25,14 +25,14 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotBlank(message = "Please enter your first name")
+    //    @NotBlank(message = "Please enter your first name")
     @Column(name = "first_name", nullable = false, length = 150)
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-//    @NotBlank(message = "Username is required")
+    //    @NotBlank(message = "Username is required")
     @Column(name = "username", unique = true, length = 150)
     private String username;
 
@@ -52,8 +52,9 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Authority> authorities = new HashSet<>();
         userRoles.forEach(userRole -> {
-            authorities.add(new Authority(userRole.getRole().getName()));
-        });
+                    authorities.add(new Authority(userRole.getRole().getName()));
+                }
+        );
         return authorities;
     }
 
