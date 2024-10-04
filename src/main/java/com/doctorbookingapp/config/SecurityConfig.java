@@ -72,7 +72,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)  // Disable CSRF protection
                 .cors(AbstractHttpConfigurer::disable)  // Disable CORS
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()  // Allow unauthenticated access to /auth/**
+                        .requestMatchers("/auth/**", "/actuator/**").permitAll()  // Allow unauthenticated access to /auth/**
                         .anyRequest().authenticated()  // All other requests need to be authenticated
                 )
                 .sessionManagement(session -> session

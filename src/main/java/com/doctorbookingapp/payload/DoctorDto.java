@@ -12,6 +12,7 @@ import java.util.OptionalDouble;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DoctorDto {
+
     private Doctor doctor;
     private List<Review> reviews;
     private double overallRatingPercentage;

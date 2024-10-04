@@ -62,6 +62,7 @@ public class AuthController {
             return new ResponseEntity<>("Failed to create user: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
     //Method for : Delete user
     // http://localhost:8080/auth/users/delete/{id}
     @DeleteMapping("/delete/{id}")
@@ -83,25 +84,34 @@ public class AuthController {
     }
 
 
-
     //Login method
     // http://localhost:8080/auth/users/login
-// In AuthController
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody SignInDto signInDto) throws Exception {
+        // Step 1: Authenticate the user with username and password
         try {
+            // Call the authenticate method to verify username and password
             authenticate(signInDto.getUsername(), signInDto.getPassword());
         } catch (UsernameNotFoundException e) {
+            // Log the error if the user is not found
             logger.error(e.getMessage(), e);
+            // Throw a custom exception if the user is not found
             throw new Exception("User not found");
         }
-        // Authenticate
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(signInDto.getUsername());
-        String token = this.jwtService.generateToken(userDetails);
-        long expiresIn = this.jwtService.getExpirationTime(); // Get the expiration time
 
-        // Return the token and expiration time in the response
+        // Step 2: After successful authentication, load the user's details
+        // This fetches the user from the database based on the username
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(signInDto.getUsername());
+
+        // Step 3: Generate a JWT token for the authenticated user
+        // This token will be used for authorizing subsequent API requests
+        String token = this.jwtService.generateToken(userDetails);
+
+        // Step 4: Get the expiration time for the generated JWT token
+        long expiresIn = this.jwtService.getExpirationTime(); // Retrieve the token expiration time
+
+        // Step 5: Return the token and expiration time as part of the response
+        // A custom response object (JwtResponse) is created containing the token and its validity duration
         return ResponseEntity.ok(new JwtResponse(token, expiresIn));
     }
 
@@ -117,14 +127,22 @@ public class AuthController {
     }
 
 
-
+    /**
+     * This method performs the authentication process.
+     * It takes the username and password and verifies them using the AuthenticationManager.
+     * If successful, it allows further actions; if not, it throws appropriate exceptions.
+     */
     private void authenticate(String username, String password) throws Exception {
         try {
+            // The AuthenticationManager is used to verify the provided credentials.
+            // It creates an authentication token based on the username and password
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
-            throw new Exception("User Disabled" + e.getMessage());
+            // If the user account is disabled, throw an appropriate exception
+            throw new Exception("User Disabled: " + e.getMessage());
         } catch (BadCredentialsException e) {
-            throw new Exception("Invalid Credentials" + e.getMessage());
+            // If the credentials (username/password) are invalid, throw an appropriate exception
+            throw new Exception("Invalid Credentials: " + e.getMessage());
         }
     }
 }
