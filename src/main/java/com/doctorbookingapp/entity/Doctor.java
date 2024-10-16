@@ -16,6 +16,14 @@ import java.util.List;
 @JsonIgnoreProperties("reviews")
 public class Doctor {
 
+    // Add the following constructor for writing test cases
+    public Doctor(String doctorName, String specialization, String hospital) {
+        this.doctorName = doctorName;
+        this.specialization = specialization;
+        this.hospital = hospital;
+    }
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,4 +48,6 @@ public class Doctor {
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
+
+
 }

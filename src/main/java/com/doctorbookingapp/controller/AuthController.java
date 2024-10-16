@@ -8,6 +8,9 @@ import com.doctorbookingapp.payload.SignInDto;
 import com.doctorbookingapp.payload.SignUpDto;
 import com.doctorbookingapp.service.CustomUserDetailsService;
 import com.doctorbookingapp.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +30,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/auth/users")
+//@SecurityRequirement(name="bearer-key")
 public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -73,6 +77,7 @@ public class AuthController {
 
     //Method for : Logout user
     // http://localhost:8080/auth/users/logout
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader("Authorization") String authHeader) {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -115,9 +120,16 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(token, expiresIn));
     }
 
-    // Method to get details of the currently logged-in user using Principal
-    //http://localhost:8080/auth/users/current-user-details
     @GetMapping("/current-user-details")
+    @Operation(
+            summary = "Get Current User Details",
+            description = "Retrieves the details of the currently logged-in user.",
+            security = @SecurityRequirement(name = "bearerAuth"), // Add this line for Bearer token requirement
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "User details retrieved successfully"),
+                    @ApiResponse(responseCode = "401", description = "User not authenticated")
+            }
+    )
     public ResponseEntity<?> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null) {
             return new ResponseEntity<>("User not authenticated", HttpStatus.UNAUTHORIZED);

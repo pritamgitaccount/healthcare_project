@@ -72,7 +72,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)  // Disable CSRF protection
                 .cors(AbstractHttpConfigurer::disable)  // Disable CORS
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/actuator/**").permitAll()  // Allow unauthenticated access to /auth/**
+                        // Allow unauthenticated access to Swagger, Actuator, and authentication endpoints
+                        .requestMatchers("/auth/**", "/api/doctors/search", "/actuator/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/index.html").permitAll()
+                        .requestMatchers("/api/doctors/update").hasRole("ADMIN")
                         .anyRequest().authenticated()  // All other requests need to be authenticated
                 )
                 .sessionManagement(session -> session

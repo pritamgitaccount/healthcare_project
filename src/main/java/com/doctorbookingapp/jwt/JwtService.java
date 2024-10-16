@@ -32,10 +32,17 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+
+    /*
+    The use of generics (<T>) makes the extractClaim method flexible, allowing it to return different types of claims based on the
+     provided claimsResolver function.
+     */
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
+
+
 
     public String generateToken(UserDetails userDetails) {
         logger.info("Generating token for user: {}", userDetails.getUsername());
