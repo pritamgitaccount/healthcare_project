@@ -9,6 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/patients")
 public class PatientController {
@@ -65,11 +69,11 @@ public class PatientController {
     // Controller: Handle PATCH request
     //http://localhost:8080/api/patients?patientId=123
     @PatchMapping
-    public ResponseEntity<UpdateResponse> updatePatient(@RequestParam Long patientId,
-                                                                                                           @RequestBody PatientDto updatedPatient) {
+    public ResponseEntity<UpdateResponse> updatePatient(@RequestParam Long patientId, @RequestBody PatientDto updatedPatient) {
         // Call the service method which returns an UpdateResponse
         UpdateResponse updateResponse = patientService.updatePatient(patientId, updatedPatient);
         // Return the response with a success message
         return new ResponseEntity<>(updateResponse, HttpStatus.OK);
     }
+
 }

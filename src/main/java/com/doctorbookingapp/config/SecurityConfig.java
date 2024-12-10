@@ -69,11 +69,11 @@ public class SecurityConfig {
         logger.debug("Configuring security filter chain");
 
         http
-                .csrf(AbstractHttpConfigurer::disable)  // Disable CSRF protection
+                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
                 .cors(AbstractHttpConfigurer::disable)  // Disable CORS
                 .authorizeHttpRequests(auth -> auth
                         // Allow unauthenticated access to Swagger, Actuator, and authentication endpoints
-                        .requestMatchers("/auth/**", "/api/doctors/search", "/actuator/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/index.html").permitAll()
+                        .requestMatchers("/auth/**", "/api/doctors/search", "/actuator/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/index.html", "/api/patients/users").permitAll()
                         .requestMatchers("/api/doctors/update").hasRole("ADMIN")
                         .anyRequest().authenticated()  // All other requests need to be authenticated
                 )

@@ -20,6 +20,8 @@ public class Hospital {
     private String address;
     @Column(name = "phone", nullable = false, length = 15)
     private String phone;
+    private String contactInfo;
+    private String location;
 
 
 }
