@@ -10,6 +10,7 @@ import com.doctorbookingapp.repository.UserRepository;
 import com.doctorbookingapp.jwt.JwtService;
 import com.doctorbookingapp.service.CustomUserDetailsService;
 import com.doctorbookingapp.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+  //  private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final JwtService jwtService;
