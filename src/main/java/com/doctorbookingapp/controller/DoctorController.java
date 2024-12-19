@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/doctors")
@@ -66,8 +68,12 @@ public class DoctorController {
     })
     @SecurityRequirement(name = "Bearer -token")
     @PutMapping("/update/{id}")
-    public ResponseEntity<Doctor> updateDoctorById(@PathVariable Long id, @RequestBody Doctor doctorDetails) {
+    public ResponseEntity<Map<String, Object>> updateDoctorById(@PathVariable Long id, @RequestBody Doctor doctorDetails) {
         Doctor updatedDoctorDetails = doctorService.updateDoctorById(id, doctorDetails);
-        return new ResponseEntity<>(updatedDoctorDetails, HttpStatus.OK);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Doctor profile updated successfully");
+        response.put("updatedDoctor", updatedDoctorDetails);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 }

@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -31,16 +32,21 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/auth/users")
 //@SecurityRequirement(name="bearer-key")
+@Slf4j
 public class AuthController {
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    // private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final UserService userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final CustomUserDetailsService userDetailsService;
     private final TokenBlacklistService tokenBlacklistService;
 
-    public AuthController(UserService userService, JwtService jwtService, AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService, TokenBlacklistService tokenBlacklistService) {
+    public AuthController(UserService userService,
+                          JwtService jwtService,
+                          AuthenticationManager authenticationManager,
+                          CustomUserDetailsService userDetailsService,
+                          TokenBlacklistService tokenBlacklistService) {
         this.userService = userService;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
@@ -99,7 +105,7 @@ public class AuthController {
             authenticate(signInDto.getUsername(), signInDto.getPassword());
         } catch (UsernameNotFoundException e) {
             // Log the error if the user is not found
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             // Throw a custom exception if the user is not found
             throw new Exception("User not found");
         }

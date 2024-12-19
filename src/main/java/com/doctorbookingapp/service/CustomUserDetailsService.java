@@ -2,6 +2,7 @@ package com.doctorbookingapp.service;
 
 import com.doctorbookingapp.entity.User;
 import com.doctorbookingapp.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,8 +16,9 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
-    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
+//    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
     private final UserRepository userRepository;
 
     public CustomUserDetailsService(UserRepository userRepository) {
@@ -36,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
-        logger.info("User found: {}", username);
+        log.info("User found: {}", username);
         return user;
     }
 

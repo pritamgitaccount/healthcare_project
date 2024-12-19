@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class HospitalServiceImpl implements HospitalService {
-  //  private static final Logger logger = LoggerFactory.getLogger(HospitalServiceImpl.class);
+    //  private static final Logger logger = LoggerFactory.getLogger(HospitalServiceImpl.class);
     private final HospitalRepository hospitalRepository;
     private final DepartmentRepository departmentRepository;
     private final WardRepository wardRepository;
@@ -86,7 +86,7 @@ public class HospitalServiceImpl implements HospitalService {
                 () -> new ResourceNotFoundException("Hospital not found with Id: " + id)
         );
         hospitalRepository.deleteById(id);
-       // logger.info("Hospital deleted successfully");
+        // logger.info("Hospital deleted successfully");
         log.info("Hospital deleted successfully");
     }
 
