@@ -1,8 +1,9 @@
 package com.doctorbookingapp.payload;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 public class PatientDto {
     private Long patientId;
     private String name;

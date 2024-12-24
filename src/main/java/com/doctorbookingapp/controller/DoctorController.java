@@ -75,5 +75,4 @@ public class DoctorController {
         response.put("updatedDoctor", updatedDoctorDetails);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }

@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class HospitalServiceImpl implements HospitalService {
-    //  private static final Logger logger = LoggerFactory.getLogger(HospitalServiceImpl.class);
     private final HospitalRepository hospitalRepository;
     private final DepartmentRepository departmentRepository;
     private final WardRepository wardRepository;

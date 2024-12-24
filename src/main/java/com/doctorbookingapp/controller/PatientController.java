@@ -69,11 +69,10 @@ public class PatientController {
     // Controller: Handle PATCH request
     //http://localhost:8080/api/patients?patientId=123
     @PatchMapping
-    public ResponseEntity<UpdateResponse> updatePatient(@RequestParam Long patientId, @RequestBody PatientDto updatedPatient) {
+    public ResponseEntity<UpdateResponse> updatePatient(@RequestParam Long patientId, @RequestBody PatientDto patientDto) {
         // Call the service method which returns an UpdateResponse
-        UpdateResponse updateResponse = patientService.updatePatient(patientId, updatedPatient);
+        UpdateResponse updateResponse = patientService.updatePatient(patientId, patientDto);
         // Return the response with a success message
         return new ResponseEntity<>(updateResponse, HttpStatus.OK);
     }
-
 }

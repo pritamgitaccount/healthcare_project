@@ -19,7 +19,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public Staff getStaffById(Long id) {
-        return null;
+        return staffRepository.getReferenceById(id);
     }
 
     @Override

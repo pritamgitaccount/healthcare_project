@@ -10,7 +10,7 @@ public interface StaffService {
     public Staff getStaffById(Long id);
 
     // Method to delete staff by id
-    public void deleteStaffById(Long id);
+    void deleteStaffById(Long id);
 
     // Method to update staff details
     public Staff updateStaff(Long id, Staff staff);
