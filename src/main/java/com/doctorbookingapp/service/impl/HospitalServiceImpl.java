@@ -12,34 +12,23 @@ import com.doctorbookingapp.repository.DepartmentRepository;
 import com.doctorbookingapp.repository.HospitalRepository;
 import com.doctorbookingapp.repository.WardRepository;
 import com.doctorbookingapp.service.HospitalService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class HospitalServiceImpl implements HospitalService {
     private final HospitalRepository hospitalRepository;
     private final DepartmentRepository departmentRepository;
     private final WardRepository wardRepository;
     private final ModelMapper modelMapper;
 
-    public HospitalServiceImpl(HospitalRepository hospitalRepository,
-                               DepartmentRepository departmentRepository,
-                               WardRepository wardRepository,
-                               ModelMapper modelMapper) {
-        this.hospitalRepository = hospitalRepository;
-        this.departmentRepository = departmentRepository;
-        this.wardRepository = wardRepository;
-        this.modelMapper = modelMapper;
-    }
 
     @Override
     public HospitalDto addHospital(HospitalDto hospitalDto) {
@@ -110,16 +99,12 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public Iterable<HospitalDto> getAllHospitalsByLocation(String location) {
+    public List<HospitalDto> getAllHospitalsByLocation(String location) {
         List<Hospital> hospitals = hospitalRepository.findByLocation(location)
                 .orElseThrow(() -> new ResourceNotFoundException("No hospitals found with Location: " + location));
 
         // Map each Hospital entity to HospitalDto
-        return hospitals.stream()
-                .map
-                        (this::mapToDto)
-                .collect
-                        (Collectors.toList());
+        return hospitals.stream().map(this::mapToDto).toList();
     }
 
 
@@ -135,12 +120,12 @@ public class HospitalServiceImpl implements HospitalService {
     private List<DepartmentDto> mapDepartmentsToDto(List<Department> departments) {
         return departments.stream()
                 .map(department -> modelMapper.map(department, DepartmentDto.class))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private List<WardDto> mapWardsToDto(List<Ward> wards) {
         return wards.stream()
                 .map(ward -> modelMapper.map(ward, WardDto.class))
-                .collect(Collectors.toList());
+                .toList();
     }
 }

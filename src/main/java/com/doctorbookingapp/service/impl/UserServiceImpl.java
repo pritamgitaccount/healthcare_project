@@ -10,6 +10,7 @@ import com.doctorbookingapp.repository.UserRepository;
 import com.doctorbookingapp.jwt.JwtService;
 import com.doctorbookingapp.service.CustomUserDetailsService;
 import com.doctorbookingapp.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +23,7 @@ import java.util.Set;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
   //  private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -32,14 +34,7 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder; // Use BCryptPasswordEncoder
     private final CustomUserDetailsService userDetailsService;
 
-    public UserServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository, JwtService jwtService, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, CustomUserDetailsService userDetailsService) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.jwtService = jwtService;
-        this.roleRepository = roleRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.userDetailsService = userDetailsService;
-    }
+
 
     @Override
     public SignUpDto addUser(SignUpDto signUpDto) {

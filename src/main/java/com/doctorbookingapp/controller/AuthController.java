@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,7 @@ import java.util.Objects;
 @RequestMapping("/auth/users")
 //@SecurityRequirement(name="bearer-key")
 @Slf4j
+@RequiredArgsConstructor
 public class AuthController {
 
     // private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -41,18 +43,6 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final CustomUserDetailsService userDetailsService;
     private final TokenBlacklistService tokenBlacklistService;
-
-    public AuthController(UserService userService,
-                          JwtService jwtService,
-                          AuthenticationManager authenticationManager,
-                          CustomUserDetailsService userDetailsService,
-                          TokenBlacklistService tokenBlacklistService) {
-        this.userService = userService;
-        this.jwtService = jwtService;
-        this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
-        this.tokenBlacklistService = tokenBlacklistService;
-    }
 
     // Create a new user
     // http://localhost:8080/auth/users/signup
