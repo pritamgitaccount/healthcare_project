@@ -92,7 +92,10 @@ public class AuthController {
         // Step 1: Authenticate the user with username and password
         try {
             // Call the authenticate method to verify username and password
-            authenticate(signInDto.getUsername(), signInDto.getPassword());
+            authenticate(
+                    signInDto.getUsername(),
+                    signInDto.getPassword()
+            );
         } catch (UsernameNotFoundException e) {
             // Log the error if the user is not found
             log.error(e.getMessage(), e);

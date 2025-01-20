@@ -49,22 +49,25 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public HospitalDto searchHospitalByName(String name) {
-        Hospital hospital = hospitalRepository.findByName(name).orElseThrow(
-                () -> new ResourceNotFoundException("Hospital not found with name: " + name)
-        );
+        Optional<Hospital> optionalHospital = hospitalRepository.findByName(name);
+        if (optionalHospital.isPresent()) {
+            Hospital hospital = optionalHospital.get();
 
-        // Fetch departments and wards associated with the hospital
-        List<Department> departments = departmentRepository.findByHospitalId(hospital.getId());
-        List<Ward> wards = wardRepository.findByHospitalId(hospital.getId());
+            // Fetch departments and wards associated with the hospital
+            List<Department> departments = departmentRepository.findByHospitalId(hospital.getId());
+            List<Ward> wards = wardRepository.findByHospitalId(hospital.getId());
 
-        // Map hospital entity to DTO
-        HospitalDto hospitalDto = mapToDto(hospital);
+            // Map hospital entity to DTO
+            HospitalDto hospitalDto = mapToDto(hospital);
 
-        // Map departments and wards to DTOs and set them in HospitalDto
-        hospitalDto.setDepartments(mapDepartmentsToDto(departments));
-        hospitalDto.setWards(mapWardsToDto(wards));
+            // Map departments and wards to DTOs and set them in HospitalDto
+            hospitalDto.setDepartments(mapDepartmentsToDto(departments));
+            hospitalDto.setWards(mapWardsToDto(wards));
 
-        return hospitalDto;
+            return hospitalDto;
+        } else {
+            throw new ResourceNotFoundException("No hospital found with Name: " + name);
+        }
     }
 
     @Override

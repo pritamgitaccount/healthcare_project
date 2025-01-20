@@ -6,17 +6,17 @@ import com.doctorbookingapp.payload.PatientDto;
 import com.doctorbookingapp.payload.UpdateResponse;
 import com.doctorbookingapp.repository.PatientRepository;
 import com.doctorbookingapp.service.PatientService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
-    @Autowired
-    PatientRepository patientRepository;
-    @Autowired
-    private ModelMapper modelMapper;
+    private final PatientRepository patientRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public PatientDto createPatient(PatientDto patientDto) {
