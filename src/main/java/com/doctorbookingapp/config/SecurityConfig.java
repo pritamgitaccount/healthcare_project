@@ -33,12 +33,15 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
 
-    /*
-        UserDetailsService:
-   Purpose: Loads user-specific data during authentication.
-   Implementation: Fetches the user from the UserRepository based on the username.
-   If the user does not exist, it throws UsernameNotFoundException.
-    */
+    /**
+     * Creates a UserDetailsService bean.
+     *
+     * Purpose: Loads user-specific data during authentication.
+     * Implementation: Fetches the user from the UserRepository based on the username.
+     * If the user does not exist, it throws UsernameNotFoundException.
+     *
+     * @return A UserDetailsService implementation that retrieves user details from the UserRepository.
+     */
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
@@ -49,33 +52,38 @@ public class SecurityConfig {
     }
 
 
-    /*
-BCryptPasswordEncoder:
-Purpose: Encodes passwords using the BCrypt hashing algorithm for secure storage.
- */
+    /**
+     * BCryptPasswordEncoder:
+     * Purpose: Encodes passwords using the BCrypt hashing algorithm for secure storage.
+     * BCryptPasswordEncoder is part of Spring Security, you're still using @Bean because you're explicitly telling Spring to manage its
+     * lifecycle and make it available for dependency injection throughout your application.
+     * @return the BCryptPasswordEncoder
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         log.debug("Creating BCryptPasswordEncoder bean");
         return new BCryptPasswordEncoder();
     }
 
-    /*
-       AuthenticationManager:
-   Purpose: Handles authentication operations like validating credentials.
-   Implementation: Obtained from the AuthenticationConfiguration bean.
-    */
+    /**
+     * AuthenticationManager:
+     * Purpose: Handles authentication operations like validating credentials.
+     * Implementation: Obtained from the AuthenticationConfiguration bean.
+     * @param config authentication configuration
+     * @return the AuthenticationManager
+     * @throws Exception if an error occurs
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         log.debug("Creating AuthenticationManager bean");
         return config.getAuthenticationManager();
     }
 
-    /*
-   AuthenticationProvider:
-
-   Purpose: Customizes the authentication process.
-   Implementation: Uses DaoAuthenticationProvider to integrate the UserDetailsService and password encoder.
-    */
+    /**
+     * AuthenticationProvider:
+     * Purpose: Customizes the authentication process.
+     * Implementation: Uses DaoAuthenticationProvider to integrate the UserDetailsService and password encoder.
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         log.debug("Creating AuthenticationProvider bean");
@@ -85,11 +93,10 @@ Purpose: Encodes passwords using the BCrypt hashing algorithm for secure storage
         return authProvider;
     }
 
-    /*
-    SecurityFilterChain:
-
-    Purpose: Configures the security rules for HTTP requests.
-    Implementation: Defines request authorization, session policies, and JWT filter integration.
+    /**
+     * SecurityFilterChain:
+     * Purpose: Configures the security rules for HTTP requests.
+     * Implementation: Defines request authorization, session policies, and JWT filter integration.
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

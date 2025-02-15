@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @RestController
 @RequestMapping("/auth/users")
 //@SecurityRequirement(name="bearer-key")
@@ -75,7 +77,7 @@ public class AuthController {
     // http://localhost:8080/auth/users/logout
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader("Authorization") String authHeader) {
+    public ResponseEntity<String> logout(@RequestHeader(AUTHORIZATION) String authHeader) {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             tokenBlacklistService.addTokenToBlacklist(token);  // Blacklist the token

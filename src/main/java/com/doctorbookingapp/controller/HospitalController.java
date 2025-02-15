@@ -48,9 +48,13 @@ public class HospitalController {
     // http://localhost:8080/api/hospitals/hospital/search?name={name}
     @GetMapping("/hospital/search")
 //    @PreAuthorize("permitAll()")
-    public ResponseEntity<HospitalDto> searchHospitalByName(@RequestParam String name) {
+    public ResponseEntity<?> searchHospitalByName(@RequestParam String name) {
         HospitalDto hospitalDto = hospitalService.searchHospitalByName(name);
-        return ResponseEntity.ok(hospitalDto);
+        if (hospitalDto != null) {
+            return ResponseEntity.ok(hospitalDto);
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hospital not found");
+        }
     }
 
     /*

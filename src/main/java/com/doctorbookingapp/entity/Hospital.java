@@ -16,11 +16,8 @@ public class Hospital {
     private Long id;
     @Column(name = "name", nullable = false, length = 255)
     private String name;
-    @Column(name = "address", nullable = false, length = 255)
-    private String address;
-    @Column(name = "phone", nullable = false, length = 15)
-    private String phone;
     private String contactInfo;
+    @Column(name = "location", nullable = false, length = 255)
     private String location;
 
 
