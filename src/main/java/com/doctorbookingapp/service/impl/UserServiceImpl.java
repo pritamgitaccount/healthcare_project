@@ -26,14 +26,13 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-  //  private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    //  private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder; // Use BCryptPasswordEncoder
     private final CustomUserDetailsService userDetailsService;
-
 
 
     @Override
@@ -87,6 +86,13 @@ public class UserServiceImpl implements UserService {
                 () -> new ResourceNotFoundException("User not found with Id :" + id)
         );
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User not found with Id :" + userId)
+        );
     }
 
 //    @Override

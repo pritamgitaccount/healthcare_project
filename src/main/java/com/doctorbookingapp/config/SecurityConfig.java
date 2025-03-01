@@ -114,7 +114,8 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
                                 "/swagger-ui/index.html",
-                                "/api/patients/users"
+                                "/api/patients/users",
+                                "/api/bookings/doctor/{doctorId}"
                         ).permitAll()
                         .requestMatchers("/api/doctors/update").hasRole("ADMIN")
                         .anyRequest().authenticated()  // All other requests need to be authenticated

@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class HospitalServiceImpl implements HospitalService {
+
+
     private final HospitalRepository hospitalRepository;
     private final DepartmentRepository departmentRepository;
     private final WardRepository wardRepository;

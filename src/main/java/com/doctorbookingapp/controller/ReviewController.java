@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.OptionalDouble;
 
+import static org.springframework.http.HttpStatus.*;
+
 @RestController
 @RequestMapping("/api/reviews")
 public class ReviewController {
@@ -28,16 +30,16 @@ public class ReviewController {
     public ResponseEntity<?> createReview(@RequestBody Review review) {
         if (review.getRating() >= 0 && review.getRating() <= 5) {
             Review createdReview = reviewService.createReview(review);
-            return new ResponseEntity<>(createdReview, HttpStatus.CREATED);
+            return new ResponseEntity<>(createdReview, CREATED);
         } else {
-            return new ResponseEntity<>("Review rating must be between 0 to 5.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Review rating must be between 0 to 5.", BAD_REQUEST);
         }
     }
 
     @GetMapping
     public ResponseEntity<List<Review>> getAllReviews() {
         List<Review> reviews = reviewService.getAllReviews();
-        return new ResponseEntity<>(reviews, HttpStatus.OK);
+        return new ResponseEntity<>(reviews, OK);
     }
 
     @GetMapping("/{doctorId}")
@@ -74,6 +76,6 @@ public class ReviewController {
     @GetMapping("/patient/{patientId}")
     public ResponseEntity<List<Review>> getReviewsByPatientId(@PathVariable Long patientId) {
         List<Review> reviews = reviewService.getReviewsByPatientId(patientId);
-        return new ResponseEntity<>(reviews, HttpStatus.OK);
+        return new ResponseEntity<>(reviews, OK);
     }
 }
