@@ -9,6 +9,8 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler1 {
 
@@ -22,7 +24,7 @@ public class GlobalExceptionHandler1 {
                 webRequest.getDescription(false) // The request description, excluding the query string (false).
         );
 
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorDetails, NOT_FOUND);
     }
 
     @ExceptionHandler(BookingNotFoundException.class)
@@ -33,6 +35,6 @@ public class GlobalExceptionHandler1 {
                 e.getMessage(),
                 webRequest.getDescription(false)
         );
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorDetails, NOT_FOUND);
     }
 }
